@@ -1,0 +1,17 @@
+data:
+  cmd: python -m spacy run data
+  script:
+    - python ./scripts/parse_semeval.py assets/annotations.jsonl data/train.spacy
+      data/dev.spacy data/test.spacy
+  deps:
+    - path: assets/annotations.jsonl
+      md5: 82bb4d1828057a91dd86085f70fb4991
+  outs:
+    - path: data/train.spacy
+      md5: f7e6ad918b139455686dabbeaa534958
+    - path: data/dev.spacy
+      md5: cfddcabae1bf59ef09837ce6ec00ab01
+    - path: data/test.spacy
+      md5: 425755324030a0b8647826a62a8350e2
+  spacy_version: 3.1.1
+  spacy_git_version: ffaead8fe
