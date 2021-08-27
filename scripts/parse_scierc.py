@@ -8,7 +8,9 @@ from spacy.vocab import Vocab
 from wasabi import Printer
 from spacy.lang.en import English
 import random
-nlp = English()
+from spacy.vocab import Vocab
+vocab = Vocab()
+
 msg = Printer()
 
 
