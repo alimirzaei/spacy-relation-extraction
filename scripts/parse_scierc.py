@@ -54,6 +54,7 @@ def get_doc_bin_on_file(file_path):
                         rels.append({
                             (-offset+r[0], -offset+r[2]): TEMPLATE_REL,
                         })
+            doc._.rel = rels
             offset += len(s)
             docs.append(doc)
     docbin = DocBin(docs=docs, store_user_data=True)
@@ -80,7 +81,7 @@ def main(json_loc: Path, train_file: Path, dev_file: Path, test_file: Path):
 
     test_data_path = Path('./assets/SciErc/test.json')
     test_doc_bin = get_doc_bin_on_file(test_data_path)
-    dev_doc_bin.to_disk(test_file)
+    test_doc_bin.to_disk(test_file)
     msg.info(
         f"{len(test_doc_bin)} training sentences "
     )
