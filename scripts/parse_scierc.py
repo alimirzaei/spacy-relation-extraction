@@ -13,6 +13,7 @@ msg = Printer()
 
 
 def get_doc_bin_on_file(file_path):
+    json_file = [json.loads(f) for f in file_path.open()]
     docs = []
     for paper in json_file:
         offset = 0
