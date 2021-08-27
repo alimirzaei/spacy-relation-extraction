@@ -13,6 +13,16 @@ vocab = Vocab()
 
 msg = Printer()
 
+relations = ['COMPARE',
+ 'CONJUNCTION',
+ 'EVALUATE-FOR',
+ 'FEATURE-OF',
+ 'HYPONYM-OF',
+ 'PART-OF',
+ 'USED-FOR']
+ birdirectional = ['COMPARE',
+ 'CONJUNCTION']
+
 
 def get_doc_bin_on_file(file_path):
     json_file = [json.loads(f) for f in file_path.open()]
@@ -30,9 +40,21 @@ def get_doc_bin_on_file(file_path):
                 except:
                     print("err")
                     continue
-            doc._.rel = [ {(-offset+r[0], -offset+r[2]): {
-                                r[4] : 1.0 
-                }} for r in rs if(-offset+r[0] in [e.start for e in doc.ents] and -offset+r[2] in [e.start for e in doc.ents])]
+            
+            rels = []
+            for r in rs:
+                TEMPLATE_REL = {'COMPARE': 0.0,'CONJUNCTION': 0.0,'EVALUATE-FOR': 0.0,'FEATURE-OF': 0.0,'HYPONYM-OF': 0.0,'PART-OF': 0.0,'USED-FOR': 0.0}
+                if(-offset+r[0] in [e.start for e in doc.ents] and -offset+r[2] in [e.start for e in doc.ents]):
+                    TEMPLATE_REL[r[4]] = 1.0
+                    if(r[4] in birdirectional):
+                        rels.append({
+                            (-offset+r[0], -offset+r[2]): TEMPLATE_REL,
+                            (-offset+r[2], -offset+r[0]): TEMPLATE_REL
+                        })
+                    else:
+                        rels.append({
+                            (-offset+r[0], -offset+r[2]): TEMPLATE_REL,
+                        })
             offset += len(s)
             docs.append(doc)
     docbin = DocBin(docs=docs, store_user_data=True)
