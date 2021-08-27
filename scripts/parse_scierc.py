@@ -20,8 +20,7 @@ relations = ['COMPARE',
  'HYPONYM-OF',
  'PART-OF',
  'USED-FOR']
- birdirectional = ['COMPARE',
- 'CONJUNCTION']
+ birdirectional = ['COMPARE','CONJUNCTION']
 
 
 def get_doc_bin_on_file(file_path):
