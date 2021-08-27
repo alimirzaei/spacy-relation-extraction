@@ -21,15 +21,15 @@ def get_doc_bin_on_file(file_path):
             doc = Doc(vocab, words=s, spaces=[True for i in s])
             ents = []
             for e in ner:
-            try: 
-                ent = Span(doc, e[0]-offset, e[1]-offset+1, label=e[2])
-                doc.ents = list(doc.ents) + [ent]
-            except:
-                print("err")
-                continue
+                try: 
+                    ent = Span(doc, e[0]-offset, e[1]-offset+1, label=e[2])
+                    doc.ents = list(doc.ents) + [ent]
+                except:
+                    print("err")
+                    continue
             doc._.rel = [ {(-offset+r[0], -offset+r[2]): {
-                            r[4] : 1.0 
-            }} for r in rs if(-offset+r[0] in [e.start for e in doc.ents] and -offset+r[2] in [e.start for e in doc.ents])]
+                                r[4] : 1.0 
+                }} for r in rs if(-offset+r[0] in [e.start for e in doc.ents] and -offset+r[2] in [e.start for e in doc.ents])]
             offset += len(s)
             docs.append(doc)
     docbin = DocBin(docs=docs, store_user_data=True)
